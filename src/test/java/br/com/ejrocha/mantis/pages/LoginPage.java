@@ -9,29 +9,40 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 
 public class LoginPage {
-    WebDriver driver;
 
-    // Mapeando os elementos da página
+    private WebDriver driver;
+    private WebDriverWait wait;
+
     @FindBy(name = "username")
-    WebElement usernameField;
+    private WebElement usernameField;
 
     @FindBy(name = "password")
-    WebElement passwordField;
+    private WebElement passwordField;
+
+    @FindBy(id = "email-field")
+    private WebElement emailField;
 
     @FindBy(xpath = "//input[@value='Login']")
-    WebElement loginButton;
+    private WebElement loginButton;
 
-    // Usando CSS Selector para localizar elemento com múltiplas classes
     @FindBy(css = ".nav.ace-nav")
-    WebElement createTask;
+    private WebElement createTask;
 
-    // Construtor
+    @FindBy(xpath = "//div[contains(@class, 'alert-danger')]")
+    private WebElement errorMessage;
+
+    @FindBy(xpath = "//*[@id=\"login-form\"]/fieldset/a")
+    private WebElement forgotPassword;
+
+    @FindBy(xpath = "//*[@id=\"lost-password-form\"]/fieldset/input[2]")
+    private WebElement send;
+
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
     }
 
-    // Métodos para interagir com a página
     public void enterUsername(String username) {
         usernameField.sendKeys(username);
     }
@@ -40,13 +51,31 @@ public class LoginPage {
         passwordField.sendKeys(password);
     }
 
+    public void enterEmail(String email) {
+        waitForElementVisibility(emailField).sendKeys(email);
+    }
+
     public void clickLogin() {
         loginButton.click();
     }
 
+    public void clickSend() {
+        send.click();
+    }
+
     public boolean checkButton() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement createTaskElement = wait.until(ExpectedConditions.visibilityOf(createTask));
-        return createTaskElement.isDisplayed();
+        return waitForElementVisibility(createTask).isDisplayed();
+    }
+
+    public String checkErrorMessage() {
+        return waitForElementVisibility(errorMessage).getText();
+    }
+
+    public void clickForgotMessage() {
+        forgotPassword.click();
+    }
+
+    private WebElement waitForElementVisibility(WebElement element) {
+        return wait.until(ExpectedConditions.visibilityOf(element));
     }
 }
