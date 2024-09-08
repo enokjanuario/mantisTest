@@ -47,13 +47,6 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void executeLogin(String username, String password) {
-        enterUsername(username);
-        clickLogin();
-        enterPassword(password);
-        clickLogin();
-    }
-
     public void enterUsername(String username) {
         waitForElementVisibility(usernameField).sendKeys(username);
     }

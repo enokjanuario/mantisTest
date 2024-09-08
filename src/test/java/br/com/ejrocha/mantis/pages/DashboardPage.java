@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Locale;
 
 public class DashboardPage {
     private final WebDriver driver;
@@ -24,10 +25,10 @@ public class DashboardPage {
     }
 
     @FindBy(xpath = "//*[@id=\"sidebar\"]/ul/li[2]/a")
-    private WebElement myTasks;
+    private WebElement seeIssues;
 
     @FindBy(xpath = "//*[@id=\"sidebar\"]/ul/li[3]/a")
-    private WebElement createTask;
+    private WebElement createIssue;
 
     @FindBy(xpath = "//*[@id=\"sidebar\"]/ul/li[4]/a")
     private WebElement changelog;
@@ -35,12 +36,18 @@ public class DashboardPage {
     @FindBy(xpath = "//*[@id=\"sidebar\"]/ul/li[5]/a")
     private WebElement planning;
 
-    public void clickMyTasks(){
-        waitForElementVisibility(myTasks).click();
+    @FindBy(xpath = "//*[@id=\"main-container\"]/div[2]/div[2]/div/div[2]")
+    private WebElement tableMyVision;
+
+    @FindBy(xpath = "//*[@id=\"main-container\"]/div[2]/div[2]/div/div")
+    private WebElement reportDetails;
+
+    public void clickSeeIssues(){
+        waitForElementVisibility(seeIssues).click();
     }
 
-    public void clickCreateTask(){
-        waitForElementVisibility(createTask).click();
+    public void clickCreateIssue(){
+        waitForElementVisibility(createIssue).click();
     }
 
     public void clickChangeLog(){
@@ -49,6 +56,14 @@ public class DashboardPage {
 
     public void clickPlanning(){
         waitForElementVisibility(planning).click();
+    }
+
+    public boolean isTableMyVisionVisible(){
+        return waitForElementVisibility(tableMyVision).isDisplayed();
+    }
+
+    public String getTitleFromTable(){
+        return reportDetails.getText().toLowerCase(Locale.ROOT).split("\n")[0];
     }
 
 }
