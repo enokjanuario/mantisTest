@@ -9,16 +9,27 @@ public class RegisterTests extends BaseTest {
 
     @Test
     public void testRegisterWithoutCaptcha() {
-        LoginPage loginPage = new LoginPage(driver);
-        RegisterPage registerPage = new RegisterPage(driver);
+        try {
 
-        loginPage.clickCreateAccount();
+            LoginPage loginPage = new LoginPage(driver);
 
-        loginPage.enterUsername("new_user_username");
-        loginPage.enterEmail("new_user_email");
+            RegisterPage registerPage = new RegisterPage(driver);
 
-        registerPage.clickSignUp();
+            loginPage.clickCreateAccount();
 
-        assertTrue(loginPage.checkErrorMessage().contains("Confirmation hash does not match."));
+            loginPage.enterUsername("new_user_username");
+            loginPage.enterEmail("new_user_email");
+
+            registerPage.clickSignUp();
+
+            assertTrue(loginPage.checkErrorMessage().contains("Confirmation hash does not match."));
+
+        } catch (AssertionError e){
+
+            System.err.println("[Error] Assertion Failure. Stacktrace:");
+            e.printStackTrace();
+            throw e;
+
+        }
     }
 }

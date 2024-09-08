@@ -32,6 +32,9 @@ public class CreateIssuePage {
     @FindBy(xpath = "//*[@id=\"report_bug_form\"]/div/div[2]/div[2]/input")
     private WebElement createIssueButton;
 
+    @FindBy(xpath = "//div[@class='alert alert-success center']//p[@class='bold bigger-110']")
+    private WebElement sucessAlert;
+
     public void selectTestCategory(Integer index){
         Select select = new Select(category);
         select.selectByIndex(index);
@@ -47,6 +50,10 @@ public class CreateIssuePage {
 
     public void clickCreateissueButton(){
         createIssueButton.click();
+    }
+
+    public String getSuccessMessage(){
+        return sucessAlert.getText();
     }
 
 }

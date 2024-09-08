@@ -13,32 +13,71 @@ public class DashboardTests extends BaseTest{
 
     @Test
     public void testAccessToMyView(){
-        DashboardPage dashboardPage = new DashboardPage(driver);
-        loginAsUser();
-        dashboardPage.clickSeeIssues();
-        assertTrue(dashboardPage.isTableMyVisionVisible());
+        try {
+
+            DashboardPage dashboardPage = new DashboardPage(driver);
+            loginAsUser();
+            dashboardPage.clickSeeIssues();
+            assertTrue(dashboardPage.isTableMyVisionVisible());
+
+        } catch (AssertionError e){
+
+            System.err.println("[Error] Assertion Failure. Stacktrace:");
+            e.printStackTrace();
+            throw e;
+
+        }
     }
 
     @Test
     public void testAccessToCreateTask() throws InterruptedException {
-        DashboardPage dashboardPage = new DashboardPage(driver);
-        loginAsUser();
-        dashboardPage.clickCreateIssue();
-        assertEquals(dashboardPage.getTitleFromTable(), "enter issue details");
+        try {
+
+            DashboardPage dashboardPage = new DashboardPage(driver);
+            loginAsUser();
+            dashboardPage.clickCreateIssue();
+            assertEquals(dashboardPage.getTitleFromTable(), "enter issue details");
+
+        } catch (AssertionError e){
+
+            System.err.println("[Error] Assertion Failure. Stacktrace:");
+            e.printStackTrace();
+            throw e;
+
+        }
     }
 
     @Test
     public void testAccessToChangelog(){
-        DashboardPage dashboardPage = new DashboardPage(driver);
-        loginAsUser();
-        dashboardPage.clickChangeLog();
+        try {
+
+            DashboardPage dashboardPage = new DashboardPage(driver);
+            loginAsUser();
+            dashboardPage.clickChangeLog();
+
+        } catch (AssertionError e){
+            System.err.println("[Error] Assertion Failure. Stacktrace:");
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Test
     public void testAccessToPlanning(){
-        DashboardPage dashboardPage = new DashboardPage(driver);
-        loginAsUser();
-        dashboardPage.clickPlanning();
+        try {
+
+            DashboardPage dashboardPage = new DashboardPage(driver);
+            loginAsUser();
+            dashboardPage.clickPlanning();
+
+        } catch (AssertionError e){
+
+            System.err.println("[Error] Assertion Failure. Stacktrace:");
+            e.printStackTrace();
+            throw e;
+
+        }
+
     }
 
 }

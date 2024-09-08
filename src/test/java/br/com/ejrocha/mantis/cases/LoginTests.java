@@ -3,6 +3,11 @@ package br.com.ejrocha.mantis.cases;
 import br.com.ejrocha.mantis.pages.LoginPage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.NoSuchElementException;
+import java.util.concurrent.TimeoutException;
+
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,7 +28,13 @@ public class LoginTests extends BaseTest {
             loginPage.clickLogin();
 
             assertTrue(loginPage.checkButton());
-        } catch (Exception e) {
+
+        } catch (NoSuchElementException e) {
+            System.err.println("[Error] Element not found. Stacktrace:");
+            e.printStackTrace();
+            throw e;
+        } catch (AssertionError e){
+            System.err.println("[Error] Assertion Failure. Stacktrace:");
             e.printStackTrace();
             throw e;
         }
@@ -41,9 +52,43 @@ public class LoginTests extends BaseTest {
 
             assertEquals("Your account may be disabled or blocked or the username/password you entered is incorrect.",
                     loginPage.checkErrorMessage());
-        } catch (Exception e) {
+
+        } catch (NoSuchElementException e) {
+            System.err.println("[Error] Element not found. Stacktrace:");
+            e.printStackTrace();
+            throw e;
+        } catch (AssertionError e){
+            System.err.println("[Error] Assertion Failure. Stacktrace:");
             e.printStackTrace();
             throw e;
         }
     }
+
+    @Test
+    public void testWithoutCredentials() {
+        try {
+            LoginPage loginPage = new LoginPage(driver);
+
+            loginPage.enterUsername("");
+            loginPage.clickLogin();
+
+            assertEquals("Your account may be disabled or blocked or the username/password you entered is incorrect.",
+                    loginPage.checkErrorMessage());
+
+        } catch (NoSuchElementException e) {
+
+            System.err.println("[Error] Element not found. Stacktrace:");
+            e.printStackTrace();
+            throw e;
+
+        } catch (AssertionError e){
+
+            System.err.println("[Error] Assertion Failure. Stacktrace:");
+            e.printStackTrace();
+            throw e;
+
+        }
+
+    }
+
 }
