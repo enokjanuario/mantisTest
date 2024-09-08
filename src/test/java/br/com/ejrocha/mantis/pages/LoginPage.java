@@ -4,6 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.time.Duration;
 
 public class LoginPage {
     WebDriver driver;
@@ -18,7 +21,8 @@ public class LoginPage {
     @FindBy(xpath = "//input[@value='Login']")
     WebElement loginButton;
 
-    @FindBy(id = "sidebar")
+    // Usando CSS Selector para localizar elemento com múltiplas classes
+    @FindBy(css = ".nav.ace-nav")
     WebElement createTask;
 
     // Construtor
@@ -41,6 +45,8 @@ public class LoginPage {
     }
 
     public boolean checkButton() {
-        return createTask.isDisplayed();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement createTaskElement = wait.until(ExpectedConditions.visibilityOf(createTask));
+        return createTaskElement.isDisplayed();
     }
 }
