@@ -28,7 +28,7 @@ public class DashboardTests extends BaseTest{
     }
 
     @Test
-    public void testAccessToSeeIssues(){
+    public void testAccessToViewIssues(){
         try {
 
             DashboardPage dashboardPage = new DashboardPage(driver);
