@@ -84,6 +84,80 @@ To run the project's tests, use the following command in the terminal, from the 
 
 `mvn test`
 
+# Automation Framework Documentation
+
+## Project Architecture
+
+The automation framework uses the **Page Object Model (POM)** pattern, where each page of the web application is represented by a class. This pattern organizes the code in a modular way, keeping the navigation/interaction logic separate from the test logic. This approach makes the maintenance and scalability of automated tests easier, allowing for the reuse of page methods across different test scenarios.
+
+## File Structure
+
+- **CreateIssuePage**: Contains methods to interact with the issue creation page, including functions to select the category, enter a summary and description, and create a new issue.
+- **DashboardPage**: Provides interactions with the main dashboard of the application, such as navigating between sections like "My Vision", issue creation, changelog, and planning.
+- **LoginPage**: Allows the user to log into the system, with additional options like "Forgot Password" and creating new accounts.
+- **MyAccountPage**: Displays user account information and associated projects.
+- **RegisterPage**: Implements the functionality for user registration in the system.
+- **ViewIssuesPage**: Implements functionalities related to viewing issues, such as displaying the priority of the first issue and exporting data to Excel.
+
+## Patterns Used
+
+1. **Page Object Model (POM)**:  
+   All interactions with the user interface (UI) are encapsulated within page classes, promoting code reuse and simplifying future changes in the page structure without directly impacting the tests.
+
+2. **Use of `WebDriverWait`**:  
+   The code utilizes explicit waits to ensure elements are visible or clickable before interacting with them. This improves test stability by avoiding intermittent failures due to synchronization issues between Selenium and the web application.
+
+3. **`@FindBy` Annotations**:  
+   All page elements are located using the `@FindBy` annotations, utilizing various selectors such as `xpath`, `id`, and `css`. This keeps the code clean, improves readability, and centralizes the points where elements are mapped.
+
+4. **Exception Handling**:  
+   Exceptions such as `NoSuchElementException` are properly handled in cases where elements may not be present on the page, preventing unexpected failures from interrupting tests.
+
+5. **Use of `Select`**:  
+   Interaction with dropdowns is handled using the `Select` class, allowing values to be selected by index or visible text. This makes the code more flexible and adaptable to different test scenarios.
+
+## Decision Making
+
+1. **Use of XPath and CSS Selectors**:  
+   Element selectors such as XPath were used in some cases, while others use IDs or classes. XPath is helpful when IDs or classes are unavailable, but whenever possible, more robust selectors such as `id` and `name` should be preferred.
+
+2. **Handling Conditional Elements**:  
+   To manage elements that may not be present, as seen in the `getPriorityOfFirst()` method of the `ViewIssuesPage`, a `try-catch` block was implemented to capture missing element exceptions. This prevents unnecessary failures and allows for a smoother test flow.
+
+3. **Modularity**:  
+   The separation of responsibilities into different page classes enhances code maintainability. Each class deals exclusively with a specific page or part of the application, promoting cohesion and simplifying debugging.
+
+## Code Highlights
+
+
+1. **Stability**:  
+   The use of `WebDriverWait` to ensure elements are ready for interaction significantly reduces the chance of intermittent test failures, promoting greater stability.
+
+2. **Code Reusability**:  
+   The POM pattern allows for the reuse of interaction methods across different test scenarios, reducing code duplication and making the framework easier to maintain.
+
+3. **Ease of Maintenance**:  
+   The `@FindBy` annotations centralize the location of elements, making it easy to modify the code if the page layout changes. Simply update the selector in the appropriate location without needing to alter all the tests.
+
+4. **Clear Separation of Responsibilities**:  
+   Each class represents a specific page or functionality, promoting code organization and making the logic easier to understand. This also makes the code more scalable, as new functionalities can be easily added without interfering with existing ones.
+
+## Future Improvements
+
+- **Standardizing Wait Times**:  
+  Currently, different wait times are configured (`Duration.ofSeconds(5)` and `Duration.ofSeconds(10)`). Standardizing these values or using a global configuration to define ideal wait times can improve the framework's consistency.
+
+- **Using More Robust Selectors**:  
+  Whenever possible, prefer selectors that are less prone to changes, such as `id`, `name`, or `cssSelector`, to avoid the fragility that XPath can introduce in scenarios where the page layout changes.
+
+- **Centralizing Wait Logic**:  
+  Creating a utility class for explicit waits or an abstraction layer for common conditions can reduce code repetition and improve maintainability.
+
+## Conclusion
+
+The automation framework implements good testing practices, being modular, reusable, and stable. The decisions made in the implementation aim to ensure flexibility and ease of long-term maintenance, allowing tests to adapt to changes in the application efficiently.
+
+
 ## License
 
 MIT
