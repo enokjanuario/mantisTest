@@ -1,10 +1,8 @@
 package br.com.ejrocha.mantis.cases;
 
-
 import br.com.ejrocha.mantis.pages.DashboardPage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -17,8 +15,26 @@ public class DashboardTests extends BaseTest{
 
             DashboardPage dashboardPage = new DashboardPage(driver);
             loginAsUser();
-            dashboardPage.clickSeeIssues();
-            assertTrue(dashboardPage.isTableMyVisionVisible());
+            dashboardPage.clickMyVision();
+            assertTrue(dashboardPage.getTitleFromTimeline().contains("unassigned"));
+
+        } catch (AssertionError e){
+
+            System.err.println("[Error] Assertion Failure. Stacktrace:");
+            e.printStackTrace();
+            throw e;
+
+        }
+    }
+
+    @Test
+    public void testAccessToSeeIssues(){
+        try {
+
+            DashboardPage dashboardPage = new DashboardPage(driver);
+            loginAsUser();
+            dashboardPage.clickViewIssues();
+            assertTrue(dashboardPage.getTitleFromTaskTable().contains("viewing issues"));
 
         } catch (AssertionError e){
 
@@ -36,7 +52,7 @@ public class DashboardTests extends BaseTest{
             DashboardPage dashboardPage = new DashboardPage(driver);
             loginAsUser();
             dashboardPage.clickCreateIssue();
-            assertEquals(dashboardPage.getTitleFromTable(), "enter issue details");
+            assertEquals(dashboardPage.getTitleFromReportTable(), "enter issue details");
 
         } catch (AssertionError e){
 

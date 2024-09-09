@@ -1,14 +1,13 @@
 package br.com.ejrocha.mantis.cases;
 
-import br.com.ejrocha.mantis.pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-
+import org.openqa.selenium.chrome.ChromeOptions;
+import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
 
 public abstract class BaseTest {
 
@@ -22,11 +21,23 @@ public abstract class BaseTest {
         FileInputStream input = new FileInputStream("src/test/resources/credentials.properties");
         credentials.load(input);
 
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();  // Maximizar a janela do navegador
+
+        ChromeOptions options = new ChromeOptions();
+
+
+        options.addArguments("user-data-dir=C:/Users/"+credentials.getProperty("USER")+"/AppData/Local/Google/Chrome/User Data/Default");
+        options.addArguments("download.prompt_for_download=false");
+        options.addArguments("download.directory_upgrade=true");
+        options.addArguments("safebrowsing.enabled=true");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments("--disable-download-notification");
+        options.addArguments("disable-infobars");
+
+
+        driver = new ChromeDriver(options);
+        driver.manage().window().maximize();
         driver.get("https://mantis-prova.base2.com.br/login_page.php");
         testUtils = new TestUtils(driver);
-
     }
 
     @AfterEach

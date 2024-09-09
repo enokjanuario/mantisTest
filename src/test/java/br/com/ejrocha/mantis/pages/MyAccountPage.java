@@ -8,25 +8,26 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
-public class RegisterPage {
+public class MyAccountPage {
 
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    @FindBy(xpath = "//*[@id=\"signup-form\"]/fieldset/input[2]")
-    private WebElement signUp;
-
-    public RegisterPage(WebDriver driver) {
+    public MyAccountPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
     }
 
-    public void clickSignUp() {
-        waitForElementVisibility(signUp).click();
-    }
-
     private WebElement waitForElementVisibility(WebElement element) {
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
+
+    @FindBy(xpath = "//*[@id=\"account-update-form\"]/div[3]/div[2]/div/div/table/tbody/tr/td[1]")
+    private WebElement projectName;
+
+     public String getProjectname(){
+        return waitForElementVisibility(projectName).getText();
+    }
+
 }

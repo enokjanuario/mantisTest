@@ -3,11 +3,7 @@ package br.com.ejrocha.mantis.cases;
 import br.com.ejrocha.mantis.pages.LoginPage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.util.NoSuchElementException;
-import java.util.concurrent.TimeoutException;
-
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

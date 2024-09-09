@@ -1,15 +1,10 @@
 package br.com.ejrocha.mantis.cases;
 
-
 import br.com.ejrocha.mantis.pages.CreateIssuePage;
 import br.com.ejrocha.mantis.pages.DashboardPage;
-import org.openqa.selenium.WebElement;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 @DisplayName("Create Issue Tests")
 public class CreateIssueTests extends BaseTest {
